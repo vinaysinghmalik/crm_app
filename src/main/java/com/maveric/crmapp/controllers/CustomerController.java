@@ -32,8 +32,11 @@ public class CustomerController {
     }
 
     //Get All Customer
-
-
+    @GetMapping("/v1/customer")
+    public ResponseEntity<List<Customer>> getAllCustomerDetails() throws CustomerDetailsNotFoundException{
+        List<Customer> customerToBeFound = customerServices.getAllCustomerDetails();
+        return new ResponseEntity<>(customerToBeFound, HttpStatus.OK);
+    }
 
 
     // Get Customer by ID
@@ -74,7 +77,6 @@ public class CustomerController {
         List<Customer> customersToBeFound = customerServices.getCustomerDetailsByFirstName(firstName);
         return new ResponseEntity<>(customersToBeFound, HttpStatus.OK);
     }
-
 
 
     //Get Customer By Last Name

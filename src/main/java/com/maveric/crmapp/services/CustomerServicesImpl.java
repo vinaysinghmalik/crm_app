@@ -60,6 +60,14 @@ public class CustomerServicesImpl implements CustomerServices {
     }
 
     @Override
+    public List<Customer> getAllCustomerDetails() throws CustomerDetailsNotFoundException{
+        List<Customer> allCustomerDetails = customerRepository.findAll();
+        if(allCustomerDetails.isEmpty())
+            throw new CustomerDetailsNotFoundException("No Customer Details Found");
+        return allCustomerDetails;
+    }
+
+    @Override
     public List<Customer> getCustomerDetailsByLastName(String lastName) throws CustomerDetailsNotFoundException {
         List<Customer> customers =  customerRepository.searchByLastName(lastName);
         if( customers.isEmpty()) throw  new CustomerDetailsNotFoundException("Customers details not found for lastName :  "+lastName);
