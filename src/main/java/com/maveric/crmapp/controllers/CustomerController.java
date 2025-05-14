@@ -2,6 +2,7 @@ package com.maveric.crmapp.controllers;
 import com.maveric.crmapp.exceptions.CustomerDetailsNotFoundException;
 import com.maveric.crmapp.pojos.Customer;
 import com.maveric.crmapp.services.CustomerServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +20,7 @@ public class CustomerController {
 
     //Create Customer
     @PostMapping(value = "/v1/customer", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Customer> acceptCustomerDetails (@RequestBody Customer customerToBeInsert){
+    public ResponseEntity<Customer> acceptCustomerDetails (@Valid @RequestBody Customer customerToBeInsert){
         Customer insertedCustomer = customerServices.acceptCustomerDetails(customerToBeInsert);
         return new ResponseEntity<>(insertedCustomer, HttpStatus.CREATED);
     }
@@ -32,8 +33,11 @@ public class CustomerController {
     }
 
     //Get All Customer
-
-
+    @GetMapping("/v1/customer")
+    public ResponseEntity<List<Customer>> getAllCustomerDetails() throws CustomerDetailsNotFoundException{
+        List<Customer> customerToBeFound = customerServices.getAllCustomerDetails();
+        return new ResponseEntity<>(customerToBeFound, HttpStatus.OK);
+    }
 
 
     // Get Customer by ID
@@ -76,7 +80,6 @@ public class CustomerController {
     }
 
 
-
     //Get Customer By Last Name
     @GetMapping("/v1/customer/lastName/{lastName}")
     public ResponseEntity <List<Customer>> getCustomerDetailsByLastName(@PathVariable String lastName) throws CustomerDetailsNotFoundException {
@@ -87,7 +90,7 @@ public class CustomerController {
 
     //Update Customer By ID
     @PutMapping("/v1/customer/update/{customer}")
-    public ResponseEntity<String> updateCustomerDetails(@RequestBody Customer customer) throws CustomerDetailsNotFoundException {
+    public ResponseEntity<String> updateCustomerDetails(@Valid @RequestBody Customer customer) throws CustomerDetailsNotFoundException {
         customerServices.updateCustomerDetails(customer);
         return new ResponseEntity<>("Successfully Updated", HttpStatus.OK);
     }

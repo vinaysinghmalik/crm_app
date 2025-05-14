@@ -47,9 +47,7 @@ public class CustomerServicesImpl implements CustomerServices {
         Customer customer =   customerRepository.findByEmailId(emailId);
         if( customer ==null) throw  new CustomerDetailsNotFoundException("Customer details not found for firstName :  "+emailId);
         return customer;
-
     }
-
 
 
     @Override
@@ -57,6 +55,14 @@ public class CustomerServicesImpl implements CustomerServices {
         List<Customer> customers =   customerRepository.findByFirstName(firstName);
         if( customers.isEmpty()) throw  new CustomerDetailsNotFoundException("Customer details not found for firstName :  "+firstName);
         return customers;
+    }
+
+    @Override
+    public List<Customer> getAllCustomerDetails() throws CustomerDetailsNotFoundException{
+        List<Customer> allCustomerDetails = customerRepository.findAll();
+        if(allCustomerDetails.isEmpty())
+            throw new CustomerDetailsNotFoundException("No Customer Details Found");
+        return allCustomerDetails;
     }
 
     @Override
@@ -73,18 +79,21 @@ public class CustomerServicesImpl implements CustomerServices {
         return customers;
     }
 
+
     @Override
     public List<Customer> getCustomerDetailsByGender(String gender) throws CustomerDetailsNotFoundException{
         List<Customer> customers = customerRepository.findByGender(gender);
         if(customers.isEmpty()) throw new CustomerDetailsNotFoundException("Customer details not found for gender:  " +gender);
         return customers;
     }
-//    @Override
-//    public Customer getCustomerDetailsByFirstNameAndEmailId(String firstName, String emailId) throws CustomerDetailsNotFoundException {
-//        Customer customer = customerRepository.findByFirstNameAndEmailId(firstName, emailId);
-//        if(customer ==null) throw new CustomerDetailsNotFoundException("Customer details not found for firstName and emailId : " +firstName +emailId);
-//        return customer;
-//    }
+
+    @Override
+    public Customer getCustomerDetailsByFirstNameAndEmailId(String firstName, String emailId) throws CustomerDetailsNotFoundException {
+        Customer customer = customerRepository.findByFirstNameAndEmailId(firstName, emailId);
+        if(customer ==null) throw new CustomerDetailsNotFoundException("Customer details not found for firstName and emailId : " +firstName +emailId);
+        return customer;
+    }
+
 
 
 }
