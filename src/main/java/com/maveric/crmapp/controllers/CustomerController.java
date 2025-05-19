@@ -91,8 +91,14 @@ public class CustomerController {
     //Update Customer By ID
     @PutMapping("/v1/customer/update/{customer}")
     public ResponseEntity<String> updateCustomerDetails(@Valid @RequestBody Customer customer) throws CustomerDetailsNotFoundException {
-        customerServices.updateCustomerDetails(customer);
-        return new ResponseEntity<>("Successfully Updated", HttpStatus.OK);
+        return new ResponseEntity<>(customerServices.updateCustomerDetails(customer), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/v1/customer/firstName/{firstName}/gender/{gender}")
+    public ResponseEntity<Customer> getCustomerDetailsByFirstNameAndGender(@PathVariable String firstName, @PathVariable String gender) throws CustomerDetailsNotFoundException{
+        Customer customerToBeFound = customerServices.getCustomerDetailsByFirstNameAndGender(firstName,gender);
+        return new ResponseEntity<>(customerToBeFound, HttpStatus.OK);
     }
 
 

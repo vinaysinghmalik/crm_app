@@ -24,9 +24,10 @@ public class CustomerServicesImpl implements CustomerServices {
     }
 
     @Override
-    public void  updateCustomerDetails(Customer customer) throws CustomerDetailsNotFoundException {
+    public String updateCustomerDetails(Customer customer) throws CustomerDetailsNotFoundException {
         this.getCustomerDetails(customer.getId());
         customerRepository.save(customer);
+        return("Successfully Updated");
     }
 
     @Override
@@ -94,6 +95,12 @@ public class CustomerServicesImpl implements CustomerServices {
         return customer;
     }
 
+    @Override
+    public Customer getCustomerDetailsByFirstNameAndGender(String firstName, String gender) throws CustomerDetailsNotFoundException {
+        Customer customer = customerRepository.findByFirstNameAndGender(firstName, gender);
+        if(customer == null) throw new CustomerDetailsNotFoundException("Customer details not found for firstName and emailId : " +firstName +gender);
+        return customer;
+    }
 
 
 }

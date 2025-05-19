@@ -7,7 +7,7 @@ import java.util.List;
 public interface CustomerServices {
 
     Customer acceptCustomerDetails(Customer customer);
-    void updateCustomerDetails(Customer customer)throws CustomerDetailsNotFoundException;
+    String updateCustomerDetails(Customer customer)throws CustomerDetailsNotFoundException;
     void removeCustomerDetails(int id)throws CustomerDetailsNotFoundException;
 
     Customer getCustomerDetails(int id) throws CustomerDetailsNotFoundException;
@@ -19,4 +19,5 @@ public interface CustomerServices {
     List<Customer> getCustomerDetailsByGender(String gender) throws CustomerDetailsNotFoundException;
     List<Customer> getAllCustomerDetails() throws CustomerDetailsNotFoundException;
     Customer getCustomerDetailsByFirstNameAndEmailId(String firstName, String emailId) throws CustomerDetailsNotFoundException;
+    Customer getCustomerDetailsByFirstNameAndGender(String firstName, String gender) throws CustomerDetailsNotFoundException;
 }
